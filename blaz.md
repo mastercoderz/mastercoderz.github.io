@@ -1,4 +1,4 @@
 Hackathon
 
-#blaz
+# blaz
 *githubisgreat*
