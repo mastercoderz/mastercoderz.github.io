@@ -117,6 +117,31 @@ def getFileList(year1, year2):
 
     return nameList1, nameList2
 
+def GroupProbability(wordList, countsDict):  # takes as input a wordlist and the frequency dictionary
+    # group
+    # create dictionary, store each word as a key in the dictionary with is probability of occurring
+    group = {}          # initialize group and overall dictionaries
+    for word in wordList:
+        group[word] = float(countsDict[word]/len(wordList))     #frequency of word overall total # words
+    return group # returns a dictionary storing the group probability of each word in the group
+
+def OverallProbability(wordList1, wordList2, countsDict)
+{
+    overall = {}
+
+   totalLength = len(wordList1) + len(wordList2)
+    for word1 in wordList1:         # iterate through first word list
+        overall[word1] = countsDict[word1]/totalLength
+
+   for word2 in wordList1:         # iterate through second word list
+        if word2 in overall.keys:   # if key was in first word list, add the frequencies together
+            overall[word2]+= countsDict[word2]/totalLength
+        else
+            overall[word2] = countsDict[word2]/totalLength
+
+   return overall
+}
+
 def main():
     
     fileList = ["pride.txt"] #put our primary corpus files in here
