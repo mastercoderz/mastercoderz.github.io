@@ -1,22 +1,22 @@
 import os
 from string import punctuation
 from collections import Counter
+from string import punctuation
+from stop_words import get_stop_words
 from math import log
 
 
-def clean_text(text):
-    words = text.split()
-    words = [w.strip().strip(punctuation).strip().lower()
-             for w in words]
-    words = [w for w in words 
-             if w                  # remove empty strings
-             and w != 'p'          # remove stray HTML <p> tags
-             and w != 'gt'         # remove stray HTML entities
-             and w != 'lt'
-             and w != 't'          # remove stray contraction tails
-             and w != 's'          # remove stray possesives...
-             and not any(c.isdigit() for c in w)]  # ...and numbers.
-    return words
+
+def clean_text(file):
+    fileText = file.split()
+    stop_words = get_stop_words('english')
+    allWords = []
+    for word in fileText:
+        if word not in stop_words:
+            word = word.strip().strip(punctuation).strip().lower()
+            allWords.append(word)   
+    return allWords
+
 
 def counts(l):
     doc_count = Counter()
@@ -30,23 +30,28 @@ def counts(l):
 #    all_words = set(tree_count) | set(notree_count)
     return tree_count
 
+def intersectSets(s1, s2):
+    s3 = s1 & s2
+    return s3
+
 def main():
-    for f in os.listdir('Denison University'):
-        file = open('Denison University/'+f,"r", encoding="utf-8")
-        x = file.read()
-        x = clean_text(x)
-        y = counts(x)
-        count = 0 
-        for i in y:
-            count = count + y[i]
-        
-        z2 = 0
-        z = y
-        for j in y:
-            z[j] = z[j]/count
-            if z[j]>z2:
-                z2 = z[j]
-        print(y['suicide'])
+    #for f in os.listdir('Denison University'):
+        #file = open('Denison University/'+f,"r", encoding="utf-8")
+    file = open("pride.txt", "r")
+    x = file.read()
+    x = clean_text(x)
+    y = counts(x)
+    count = 0 
+    for i in y:
+        count = count + y[i]
+    
+    z2 = 0
+    z = y
+    for j in y:
+        z[j] = z[j]/count
+        if z[j]>z2:
+            z2 = z[j]
+    print(y['the'])
     
 ##    print(z2)
 ##    for i4 in y:
